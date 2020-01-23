@@ -1,0 +1,7 @@
+The first line is a comment and is NEVER modified
+Lucas    Hyatt    951550079    llh@uoregon.edu    loo-kiss    True
+Maura    McCabe    111222333    maura@uoregon.edu    mor-uh    True
+Noah    Tigner    123456789    notig@uoregon.edu    no-uh    False
+Jimmy    Lam    987654321    jim@uoregon.edu    ji-mee    True
+Yin    Jin    123789456    yjin@uoregon.edu    yi-n    False
+Anthony    Hornoff    123456789    noff@uoregon.edu    hor-noff    True
