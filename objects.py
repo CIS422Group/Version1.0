@@ -25,7 +25,7 @@ class Student:
 
 	def summaryPerformance(self): # Returns formatted string (Req. 3.D.3)
 		# <total times called> <number of flags> <first name> <last name> <UO ID> <email address> <phonetic spelling> <reveal code><list of dates>
-		return str(self.numCalled) + '\t' + str(self.flag) + '\t' + self.fname + '\t' + self.lname + '\t' + str(self.uoID) + '\t' + self.email + '\t' + self.phonetic + '\t' + str(self.reveal) + '\t' + str(self.dates)
+		return str(self.numCalled) + '\t' + str(self.flag) + '\t' + self.fname + '\t' + self.lname + '\t' + str(self.uoID) + '\t' + self.email + '\t' + self.phonetic + '\t' + str(self.reveal) + '\t' + str(self.dates) +"\n"
 
 	def review(self): # Called by output file function feedback() (Req. 3.B.3)
 		# <response_code> <tab> <first name> <last name> “<” <email address> “>” 
@@ -40,18 +40,18 @@ class Student:
 
 # Testing
 
-student1 = Student("Lucas", "Hyatt", 951550079, "llh@uoregon.edu", "loo-kiss", True, 0, 0, [])
-student2 = Student("Maura", "McCabe", 111222333, "maura@uoregon.edu", "mor-uh", True, 0, 0, [])
-student3 = Student("Noah", "Tigner", 123456789, "notig@uoregon.edu", "no-uh", False, 0, 0, [])
-student4 = Student("Jimmy", "Lam", 987654321, "jim@uoregon.edu", "ji-mee", True, 0, 0, [])
-student5 = Student("Yin", "Jin", 123789456, "yjin@uoregon.edu", "yi-n", False, 0, 0, [])
-student6 = Student("Anthony", "Hornoff", 123456789, "noff@uoregon.edu", "hor-noff", True, 0, 0, [])
-print('Testing for student object: \n')
-student1.printStudent()
-print(student2.display())
-print(student3.summaryPerformance())
-print(student4.review())
-print('\n\n\n')
+# student1 = Student("Lucas", "Hyatt", 951550079, "llh@uoregon.edu", "loo-kiss", True, 0, 0, [])
+# student2 = Student("Maura", "McCabe", 111222333, "maura@uoregon.edu", "mor-uh", True, 0, 0, [])
+# student3 = Student("Noah", "Tigner", 123456789, "notig@uoregon.edu", "no-uh", False, 0, 0, [])
+# student4 = Student("Jimmy", "Lam", 987654321, "jim@uoregon.edu", "ji-mee", True, 0, 0, [])
+# student5 = Student("Yin", "Jin", 123789456, "yjin@uoregon.edu", "yi-n", False, 0, 0, [])
+# student6 = Student("Anthony", "Hornoff", 123456789, "noff@uoregon.edu", "hor-noff", True, 0, 0, [])
+# print('Testing for student object: \n')
+# student1.printStudent()
+# print(student2.display())
+# print(student3.summaryPerformance())
+# print(student4.review())
+# print('\n\n\n')
 
 '''
 Notes regarding input file (Source: https://classes.cs.uoregon.edu/20W/cis422/Handouts/Cold_Call_System_SRS_v2.pdf):
@@ -114,46 +114,46 @@ class classQueue:
 
 
 
-print('Testing for queue object: \n')
-studentQ = classQueue()
-test = classQueue()
-test.enqueue(student1)
-test.enqueue(student2)
-test.enqueue(student3)
-test.enqueue(student4)
-test.enqueue(student5)
-test.enqueue(student6)
+# print('Testing for queue object: \n')
+# studentQ = classQueue()
+# test = classQueue()
+# test.enqueue(student1)
+# test.enqueue(student2)
+# test.enqueue(student3)
+# test.enqueue(student4)
+# test.enqueue(student5)
+# test.enqueue(student6)
 
-studentQ.enqueue(student1)
-studentQ.enqueue(student2)
-studentQ.enqueue(student3)
-studentQ.enqueue(student4)
-studentQ.enqueue(student5)
-studentQ.enqueue(student6)
+# studentQ.enqueue(student1)
+# studentQ.enqueue(student2)
+# studentQ.enqueue(student3)
+# studentQ.enqueue(student4)
+# studentQ.enqueue(student5)
+# studentQ.enqueue(student6)
 
-studentQ.printQ()
+# studentQ.printQ()
 
-pop = studentQ.dequeue()
-pop.printStudent()
-studentQ.dequeue()
-studentQ.dequeue()
+# pop = studentQ.dequeue()
+# pop.printStudent()
+# studentQ.dequeue()
+# studentQ.dequeue()
 
-studentQ.printQ()
+# studentQ.printQ()
 
-studentQ.dequeue()
-studentQ.printQ()
-studentQ.dequeue()
-studentQ.printQ()
-studentQ.dequeue()
-studentQ.printQ()
-studentQ.dequeue()
+# studentQ.dequeue()
+# studentQ.printQ()
+# studentQ.dequeue()
+# studentQ.printQ()
+# studentQ.dequeue()
+# studentQ.printQ()
+# studentQ.dequeue()
 
-print("Check for empty:", studentQ.isEmpty())
-studentQ.combine(test.queue)
-new_stud = Student("New", "Student", 951550079, "new@uoregon.edu", "yo-new", True, 0, 0, [])
-studentQ.insertOne(new_stud, 3)
-studentQ.printQ()
-print("Check for empty:", studentQ.isEmpty())
+# print("Check for empty:", studentQ.isEmpty())
+# studentQ.combine(test.queue)
+# new_stud = Student("New", "Student", 951550079, "new@uoregon.edu", "yo-new", True, 0, 0, [])
+# studentQ.insertOne(new_stud, 3)
+# studentQ.printQ()
+# print("Check for empty:", studentQ.isEmpty())
 
 
 

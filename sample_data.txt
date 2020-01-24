@@ -1,7 +1,7 @@
-The first line is a comment and is NEVER modified
+Comments: FNAME    LNAME    UOID    EMAIL    PHONETIC    REVEAL    NUMCALLED(opt)    NUMFLAGGED(opt)    DATES(opt)[date1 date2 ...]
 Lucas    Hyatt    951550079    llh@uoregon.edu    loo-kiss    True
 Maura    McCabe    111222333    maura@uoregon.edu    mor-uh    True
-Noah    Tigner    123456789    notig@uoregon.edu    no-uh    False
+Noah    Tigner    123456789    notig@uoregon.edu    no-uh    False    5    1    [01/12/20 12/12/20 03/12/20 04/12/20 05/12/20 06/12/20]
 Jimmy    Lam    987654321    jim@uoregon.edu    ji-mee    True
 Yin    Jin    123789456    yjin@uoregon.edu    yi-n    False
 Anthony    Hornoff    123456789    noff@uoregon.edu    hor-noff    True
