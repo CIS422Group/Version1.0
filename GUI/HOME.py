@@ -4,6 +4,7 @@
 '''======================================Imports=========================================='''
 import tkinter as tk
 from tkinter import filedialog, Text
+import tkinter.ttk as ttk
 import tkinter.font
 import os
 import GUI
@@ -150,34 +151,30 @@ root.attributes("-topmost", True)   # open window in front
 pane = tk.Frame(root, bg = '#0486ff', bd=30)
 pane.pack(fill = tk.BOTH, expand = True)
 
-# canvas = tk.Canvas(root, height = 500, width = 700, bg='#1FB7C9')
-# canvas.pack()
+button_font = tkinter.font.Font(family="Helvetica",size=20,weight="bold")
 
-# inputRoster = tk.Button(root, text="Input Roster", padx=10, pady=10, fg="#E74C3C", command=inputFile).place(relx=.3, rely=.1)
-# # inputRoster.pack()
+#Progress bar will show how many student out of the roster have been chosen.
+progress = ttk.Progressbar(pane, orient=tk.HORIZONTAL, length=496)
+progress['value'] = 25
+progress.pack(side=tk.BOTTOM)
 
-# userView = tk.Button(root, text="User View", padx=10, pady=10, fg="#E74C3C").place(relx=.5, rely=.1)
-# # teacherView.pack()
-
-button_font = tkinter.font.Font(family="Helvetica",size=36,weight="bold")
-
-user_view = tk.Button(pane, text="User View", width=15, height=3, activeforeground='#7cff68', fg="#ff0443", command=switch_view)
-user_view.pack() 
+user_view = tk.Button(pane, pady=8, text="User View", command=switch_view)
+user_view.pack(side=tk.LEFT) 
 user_view['font'] = button_font
 user_view.update()
 
-input_roster = tk.Button(pane, text="Input Roster", width=15, height=3, activeforeground='#7cff68', fg="#ff0443", command=inputFile)
-input_roster.pack() 
+input_roster = tk.Button(pane, pady=8, text="Input Roster", command=inputFile)
+input_roster.pack(side=tk.LEFT)
 input_roster['font'] = button_font
 input_roster.update()
 
-export_calls = tk.Button(pane, text="Export to Log", width=15, height=3, activeforeground='#7cff68', fg="#ff0443", command=export())
-export_calls.pack() 
+export_calls = tk.Button(pane, pady=8, text="Export to Log", command=export)
+export_calls.pack(side=tk.LEFT) 
 export_calls['font'] = button_font
 export_calls.update()
 
-exit_menu = tk.Button(pane, text="Quit", width=15, height=3, activeforeground='#7cff68', fg="#ff0443", command=exitProgram)
-exit_menu.pack() 
+exit_menu = tk.Button(pane, pady=8, text="Quit", command=exitProgram)
+exit_menu.pack(side=tk.LEFT) 
 exit_menu['font'] = button_font
 exit_menu.update()
 
