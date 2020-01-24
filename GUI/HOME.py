@@ -30,7 +30,6 @@ studentQueue = classQueue()
 
 def inputFile(delimiter = "    "):
     filepath = filedialog.askopenfilename(initialdir="./..", title="Select File")
-	# TODO: Roster file in 
 
     try:
         with open(filepath, "r") as f:
