@@ -197,8 +197,8 @@ def testScreenUpdate():
 
 def main():
     #testArrowKeys()
-    #testScreenUpdate()
-    ErrorBox("Error test", "Error", "this is a test").display()
+    testScreenUpdate()
+    # ErrorBox("Error test", "Error", "this is a test").display()
 
 if __name__ == '__main__':
     main()

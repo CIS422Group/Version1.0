@@ -7,7 +7,7 @@ Usage:
 
 from setuptools import setup
 
-APP = ['HOME.py']
+APP = ['GUI.py']
 DATA_FILES = []  # for text files
 OPTIONS = {
     'iconfile':'cold_call.icns',

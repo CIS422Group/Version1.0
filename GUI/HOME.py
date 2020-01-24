@@ -53,7 +53,7 @@ def inputFile(delimiter = "    "):
                     studentQueue.enqueue(Student(fname, lname, uoID, email, phonetic, reveal, numCalled, numFlags, dates))
 
                 except (ValueError, IndexError):
-                    print(f"Line {i} of roster file is formatted incorrectly")
+                    print("Line {i} of roster file is formatted incorrectly")
                     # quit()
                     # TODO: flash errors to GUI
 
@@ -117,7 +117,7 @@ def writeLogFile(delimiter="    "):
             f.write(header)
 
             for student in studentQueue.queue:
-                line = f"{student.fname}{delimiter}{student.lname}{delimiter}{student.uoID}{delimiter}{student.email}{delimiter}{student.phonetic}{delimiter}{student.reveal}{delimiter}{student.numCalled}{delimiter}{student.numFlags}{delimiter}{student.dates}\n"
+                line = "{student.fname}{delimiter}{student.lname}{delimiter}{student.uoID}{delimiter}{student.email}{delimiter}{student.phonetic}{delimiter}{student.reveal}{delimiter}{student.numCalled}{delimiter}{student.numFlags}{delimiter}{student.dates}\n"
                 f.write(line)
 
     except FileNotFoundError:
