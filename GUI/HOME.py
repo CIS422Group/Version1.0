@@ -1,4 +1,12 @@
-#Author: Lucas Hyatt
+'''
+Author: Lucas Hyatt
+Last Modified: 1/25/20
+'''
+
+# TODO: IMPORTANT: need a more general except statement for each function.
+#                  For example, if the input file is a .docx file, the program
+#                  does not print an error, but the terminal gives a utf-8 error
+#                  and the program continues to run without crashing.
 
 
 '''======================================Imports=========================================='''
@@ -54,13 +62,23 @@ def inputFile(delimiter = "    "):
 
                 except (ValueError, IndexError):
                     print("Line {i} of roster file is formatted incorrectly")
-                    # quit()
-                    # TODO: flash errors to GUI
+
+                    # display error box
+                    title = 'Value/Index Error'
+                    heading = 'Unable to open file'
+                    msg = 'Line {} is formatted incorrectly'.format(i)
+                    GUI.displayError(title, heading, msg)
+                    return
 
     except FileNotFoundError:
         print("File Does not exist")
-        # quit()
-        # TODO: flash errors to GUI
+
+        # display error box
+        title = 'File Not Found'
+        heading = 'Unable to open file'
+        msg = 'File does not exist'
+        GUI.displayError(title, heading, msg)
+        return
 
     studentQueue.printQ()
     writeLogFile()
@@ -84,14 +102,25 @@ def writeSummaryPerformanceFile():
 
     except FileNotFoundError:
         print("File Does not exist")
-        # quit()
-        # TODO: flash errors to GUI
+
+        # display error box
+        title = 'File Not Found'
+        heading = 'Unable to open file'
+        msg = 'File does not exist'
+        GUI.displayError(title, heading, msg)
+        return
 
 def writeLogFile(delimiter="    "):
 
     if len(studentQueue.queue) == 0:
         print("No data to log")
-        # TODO: flash errors to GUI
+
+        # display error box
+        title = 'No Data'
+        heading = 'No data to log'
+        msg = ''
+        GUI.displayError(title, heading, msg)
+        return
     
 
     # TODO: decide on if log file overrides roster or is seperate
@@ -122,12 +151,16 @@ def writeLogFile(delimiter="    "):
 
     except FileNotFoundError:
         print("File Does not exist")
-        # quit()
-        # TODO: flash errors to GUI
+
+        # display error box
+        title = 'File Not Found'
+        heading = 'Unable to open file'
+        msg = 'File does not exist'
+        GUI.displayError(title, heading, msg)
+        return
 
 def export():
-    #GUI.ErrorBox('Log Error', "Log Error", "This function needs to be implemented").display()
-    pass
+    GUI.displayWarning("Button Not Implemented", "Export to Log is useless ☹️", "Button is not yet implemented")
 
 def exitProgram():
     root.destroy()
@@ -145,7 +178,7 @@ yellow = #ffde04
 root = tk.Tk() #Establishes structure for app window
 root.resizable(False, False)
 root.title("Cold Call System")
-root.attributes("-topmost", True)   # open window in front
+root.attributes("-topmost", True)  # open window in front
 
 
 pane = tk.Frame(root, bg = '#0486ff', bd=30)
@@ -154,26 +187,26 @@ pane.pack(fill = tk.BOTH, expand = True)
 button_font = tkinter.font.Font(family="Helvetica",size=20,weight="bold")
 
 #Progress bar will show how many student out of the roster have been chosen.
-progress = ttk.Progressbar(pane, orient=tk.HORIZONTAL, length=496)
+'''progress = ttk.Progressbar(pane, orient=tk.HORIZONTAL, length=496)
 progress['value'] = 25
-progress.pack(side=tk.BOTTOM)
+progress.pack(side=tk.BOTTOM)'''
 
-user_view = tk.Button(pane, pady=8, text="User View", command=switch_view)
+user_view = tk.Button(pane, pady=8, text="User View", highlightbackground='#0486ff', command=switch_view)
 user_view.pack(side=tk.LEFT) 
 user_view['font'] = button_font
 user_view.update()
 
-input_roster = tk.Button(pane, pady=8, text="Input Roster", command=inputFile)
+input_roster = tk.Button(pane, pady=8, text="Input Roster", highlightbackground='#0486ff', command=inputFile)
 input_roster.pack(side=tk.LEFT)
 input_roster['font'] = button_font
 input_roster.update()
 
-export_calls = tk.Button(pane, pady=8, text="Export to Log", command=export)
+export_calls = tk.Button(pane, pady=8, text="Export to Log", highlightbackground='#0486ff', command=export)
 export_calls.pack(side=tk.LEFT) 
 export_calls['font'] = button_font
 export_calls.update()
 
-exit_menu = tk.Button(pane, pady=8, text="Quit", command=exitProgram)
+exit_menu = tk.Button(pane, pady=8, text="Quit", highlightbackground='#0486ff', command=exitProgram)
 exit_menu.pack(side=tk.LEFT) 
 exit_menu['font'] = button_font
 exit_menu.update()
@@ -181,6 +214,7 @@ exit_menu.update()
 # Main Loop
 root.attributes("-topmost", False)  # allow window to go behind other windows
 root.mainloop()
+exit()
 
 '''
 Sources: 
