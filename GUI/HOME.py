@@ -17,6 +17,7 @@ import tkinter.font
 import os
 import GUI
 import sys
+from datetime import datetime
 
 # Needed for importing files a level up
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -51,7 +52,12 @@ def inputFile(delimiter = "    "):
                         numCalled = int(elements[6])
                         numFlags = int(elements[7])
                         dates = list("".join(elements[8:]).replace("[", "").replace("]", "").split())
-                        # TODO: parse, sort dates
+
+                        # Sort Dates Chronologically
+                        dates = [datetime.strptime(date, "%d/%m/%y") for date in dates]
+                        dates.sort(key = lambda date: date)
+                        dates = [date.strftime("%d/%m/%y") for date in dates]
+                        
                     else:
                         numCalled = 0
                         numFlags = 0
@@ -97,9 +103,6 @@ def writeSummaryPerformanceFile():
                 line = student.summaryPerformance()
                 f.write(line)
 
-                # TODO: clean up column justification?
-                # f.write(f"{student.numCalled}\t{student.flag}\t{student.fname}\t{student.lname}\t{student.uoID}\t{student.email}\t{student.phonetic}\t{student.reveal}\t{student.dates}\n")
-
     except FileNotFoundError:
         print("File Does not exist")
 
@@ -134,8 +137,12 @@ def writeLogFile(delimiter="    "):
     #
     # except FileNotFoundError:
     #     print("File Does not exist")
-    #     # quit()
-    #     # TODO: flash errors to GUI
+    #
+    #     # display error box
+    #     title = 'File Not Found'
+    #     heading = 'Unable to open file'
+    #     msg = 'File does not exist'
+    #     GUI.displayError(title, heading, msg)
 
     filepath = "log.txt"
     header = "TEMP COMMENT HEADER\n"
@@ -146,7 +153,7 @@ def writeLogFile(delimiter="    "):
             f.write(header)
 
             for student in studentQueue.queue:
-                line = "{student.fname}{delimiter}{student.lname}{delimiter}{student.uoID}{delimiter}{student.email}{delimiter}{student.phonetic}{delimiter}{student.reveal}{delimiter}{student.numCalled}{delimiter}{student.numFlags}{delimiter}{student.dates}\n"
+                line = "{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}\n".format(student.fname, delimiter, student.lname, delimiter, student.uoID, delimiter,student.email, delimiter, student.phonetic, delimiter, student.reveal, delimiter, student.numCalled, delimiter, student.numFlags, delimiter, student.dates)
                 f.write(line)
 
     except FileNotFoundError:
@@ -158,9 +165,6 @@ def writeLogFile(delimiter="    "):
         msg = 'File does not exist'
         GUI.displayError(title, heading, msg)
         return
-
-def export():
-    GUI.displayWarning("Button Not Implemented", "Export to Log is useless ☹️", "Button is not yet implemented")
 
 def exitProgram():
     root.destroy()
@@ -201,7 +205,7 @@ input_roster.pack(side=tk.LEFT)
 input_roster['font'] = button_font
 input_roster.update()
 
-export_calls = tk.Button(pane, pady=8, text="Export to Log", highlightbackground='#0486ff', command=export)
+export_calls = tk.Button(pane, pady=8, text="Export to Log", highlightbackground='#0486ff', command=writeLogFile)
 export_calls.pack(side=tk.LEFT) 
 export_calls['font'] = button_font
 export_calls.update()
