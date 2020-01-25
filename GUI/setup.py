@@ -8,7 +8,7 @@ Usage:
 from setuptools import setup
 
 APP = ['GUI.py']
-DATA_FILES = []  # for text files
+DATA_FILES = ['error_icon.gif', 'warning_icon.gif'] 
 OPTIONS = {
     'iconfile':'cold_call.icns',
 }
