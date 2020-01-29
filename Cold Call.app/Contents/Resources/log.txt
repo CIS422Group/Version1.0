@@ -1,0 +1,7 @@
+TEMP COMMENT HEADER
+Lucas    Hyatt    951550079    llh@uoregon.edu    loo-kiss    True    0    0    []
+Maura    McCabe    111222333    maura@uoregon.edu    mor-uh    True    0    0    []
+Noah    Tigner    123456789    notig@uoregon.edu    no-uh    True    5    1    ['01/12/20', '03/12/20', '04/12/20', '05/12/20', '06/12/20', '12/12/20']
+Jimmy    Lam    987654321    jim@uoregon.edu    ji-mee    True    0    0    []
+Yin    Jin    123789456    yjin@uoregon.edu    yi-n    True    0    0    []
+Anthony    Hornoff    123456789    noff@uoregon.edu    hor-noff    True    0    0    []
