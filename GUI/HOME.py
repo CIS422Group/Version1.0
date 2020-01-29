@@ -33,6 +33,8 @@ studentQueue = classQueue()
 
 def inputFile(delimiter = "    "):
     filepath = filedialog.askopenfilename(initialdir="./..", title="Select File")
+    if filepath == '':
+        return
 
     try:
         with open(filepath, "r") as f:
