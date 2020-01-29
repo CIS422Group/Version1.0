@@ -48,7 +48,8 @@ def inputFile(delimiter = "    "):
                     uoID = int(elements[2])
                     email = str(elements[3])
                     phonetic = str(elements[4])
-                    reveal = bool(elements[5])
+                    # reveal = bool(elements[5])
+                    reveal = 0
 
                     if len(elements) >= 9:
                         numCalled = int(elements[6])
@@ -88,13 +89,13 @@ def inputFile(delimiter = "    "):
         GUI.displayError(title, heading, msg)
         return
 
+    # FIXME: these calls are temporary
     studentQueue.printQ()
-    writeLogFile()
     writeSummaryPerformanceFile()
 
 def writeSummaryPerformanceFile():
 
-    filepath = "SummaryPerformanceFile.txt"
+    filepath = "../SummaryPerformanceFile.txt"
     header = "Summary Performance File for the Cold-Call-Assist program. Number-of-Times-Called    Student-Flag    First-Name    Last-Name    UO-ID    Email    Phonetic-Spelling    Reveal-Code    List-of-Dates\n"
 
     try:
@@ -126,28 +127,10 @@ def writeLogFile(delimiter="    "):
         msg = ''
         GUI.displayError(title, heading, msg)
         return
-    
 
-    # TODO: decide on if log file overrides roster or is seperate
-    # The following line depend on if the file is being written in place or written to a new file
-    #
-    # filepath = filedialog.askopenfilename(initialdir="./..", title="Select File")
-    #  -- or --
-    # try:
-    #     with open(filepath, "r") as f:
-    #         header = f.readline()
-    #
-    # except FileNotFoundError:
-    #     print("File Does not exist")
-    #
-    #     # display error box
-    #     title = 'File Not Found'
-    #     heading = 'Unable to open file'
-    #     msg = 'File does not exist'
-    #     GUI.displayError(title, heading, msg)
-
-    filepath = "log.txt"
-    header = "TEMP COMMENT HEADER\n"
+    filepath = "../dailyLogFile.txt"
+    date = datetime.now().strftime("%d/%m/%y %H:%M")
+    header = "Log File. Last Modified " + date + "\n"
 
     try:
         # Overwrite roster file, but preserve the first line
@@ -155,8 +138,10 @@ def writeLogFile(delimiter="    "):
             f.write(header)
 
             for student in studentQueue.queue:
-                line = "{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}\n".format(student.fname, delimiter, student.lname, delimiter, student.uoID, delimiter,student.email, delimiter, student.phonetic, delimiter, student.reveal, delimiter, student.numCalled, delimiter, student.numFlags, delimiter, student.dates)
-                f.write(line)
+                if student.reveal:
+                    # line = "{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}\n".format(student.fname, delimiter, student.lname, delimiter, student.uoID, delimiter,student.email, delimiter, student.phonetic, delimiter, student.reveal, delimiter, student.numCalled, delimiter, student.numFlags, delimiter, student.dates)
+                    line = "X{}{} {} <{}>\n".format(delimiter, student.fname, student.lname, student.email)
+                    f.write(line)
 
     except FileNotFoundError:
         print("File Does not exist")
