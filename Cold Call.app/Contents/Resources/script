@@ -27,7 +27,7 @@ from objects import Student, classQueue
 '''======================================Functions=========================================='''
 
 def switch_view():
-    GUI.testScreenUpdate()
+    GUI.testcontrol()
 
 studentQueue = classQueue()
 
