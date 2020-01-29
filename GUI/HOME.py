@@ -3,11 +3,6 @@ Author: Lucas Hyatt
 Last Modified: 1/25/20
 '''
 
-# TODO: IMPORTANT: need a more general except statement for each function.
-#                  For example, if the input file is a .docx file, the program
-#                  does not print an error, but the terminal gives a utf-8 error
-#                  and the program continues to run without crashing.
-
 
 '''======================================Imports=========================================='''
 import tkinter as tk
