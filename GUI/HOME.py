@@ -29,16 +29,21 @@ from objects import Student, classQueue
 def switch_view():
     GUI.testcontrol()
 
-studentQueue = classQueue()
+STUDENTQUEUE = classQueue()
+ROSTERPATH = "" # This is the global roster path, set by inputFile. Might want to change it later
 
 def inputFile(delimiter = "    "):
+    global ROSTERPATH
+
     filepath = filedialog.askopenfilename(initialdir="./..", title="Select File")
     if filepath == '':
         return
 
+    ROSTERPATH = filepath
+
     try:
         with open(filepath, "r") as f:
-            next(f)     # skip first line of roster file (comments)
+            print(next(f))     # skip first line of roster file (comments)
             for i, line in enumerate(f):
                 elements = line.strip().split(delimiter)
 
@@ -52,6 +57,7 @@ def inputFile(delimiter = "    "):
                     reveal = 0
 
                     if len(elements) >= 9:
+                        
                         numCalled = int(elements[6])
                         numFlags = int(elements[7])
                         dates = list("".join(elements[8:]).replace("[", "").replace("]", "").split())
@@ -60,6 +66,7 @@ def inputFile(delimiter = "    "):
                         dates = [datetime.strptime(date, "%d/%m/%y") for date in dates]
                         dates.sort(key = lambda date: date)
                         dates = [date.strftime("%d/%m/%y") for date in dates]
+                        dates = '['  + ' '.join(dates) + ']'
                         
                     else:
                         numCalled = 0
@@ -67,58 +74,77 @@ def inputFile(delimiter = "    "):
                         dates = []
 
                     # Create Student object, Insert into Queue
-                    studentQueue.enqueue(Student(fname, lname, uoID, email, phonetic, reveal, numCalled, numFlags, dates))
+                    STUDENTQUEUE.enqueue(Student(fname, lname, uoID, email, phonetic, reveal, numCalled, numFlags, dates))
 
                 except (ValueError, IndexError):
-                    print("Line {i} of roster file is formatted incorrectly")
+                    print("Line {} of roster file is formatted incorrectly".format(i+1))
 
                     # display error box
                     title = 'Value/Index Error'
                     heading = 'Unable to open file'
-                    msg = 'Line {} is formatted incorrectly'.format(i)
+                    msg = 'Line {} is formatted incorrectly'.format(i+1)
                     GUI.displayError(title, heading, msg)
                     return
 
     except FileNotFoundError:
-        print("File Does not exist")
+        print('File Can\'t Be Opened')
 
         # display error box
-        title = 'File Not Found'
+        title = 'File Can\'t Be Opened'
         heading = 'Unable to open file'
-        msg = 'File does not exist'
+        msg = 'File Can\'t Be Opened'
+        GUI.displayError(title, heading, msg)
+        return
+    except:
+        print('File Can\'t Be Opened')
+
+        # display error box
+        title = 'File Can\'t Be Opened'
+        heading = 'Unable to open file'
+        msg = 'File Can\'t Be Opened'
         GUI.displayError(title, heading, msg)
         return
 
     # FIXME: these calls are temporary
-    studentQueue.printQ()
+    STUDENTQUEUE.printQ()
     writeSummaryPerformanceFile()
+    overwriteRosterFile()
 
 def writeSummaryPerformanceFile():
 
     filepath = "../SummaryPerformanceFile.txt"
-    header = "Summary Performance File for the Cold-Call-Assist program. Number-of-Times-Called    Student-Flag    First-Name    Last-Name    UO-ID    Email    Phonetic-Spelling    Reveal-Code    List-of-Dates\n"
+    header = "Summary Performance File for the Cold-Call-Assist program. Number-of-Times-Called    Number-of-Flags    First-Name    Last-Name    UO-ID    Email    Phonetic-Spelling    Reveal-Code    List-of-Dates\n"
 
     try:
         with open(filepath, "w") as f:
             f.write(header)
 
-            for student in studentQueue.queue:
+            for student in STUDENTQUEUE.queue:
                 line = student.summaryPerformance()
                 f.write(line)
 
     except FileNotFoundError:
-        print("File Does not exist")
+        print('File Can\'t Be Opened')
 
         # display error box
-        title = 'File Not Found'
+        title = 'File Can\'t Be Opened'
         heading = 'Unable to open file'
-        msg = 'File does not exist'
+        msg = 'File Can\'t Be Opened'
+        GUI.displayError(title, heading, msg)
+        return
+    except:
+        print('File Can\'t Be Opened')
+
+        # display error box
+        title = 'File Can\'t Be Opened'
+        heading = 'Unable to open file'
+        msg = 'File Can\'t Be Opened'
         GUI.displayError(title, heading, msg)
         return
 
-def writeLogFile(delimiter="    "):
+def writeLogFile():
 
-    if len(studentQueue.queue) == 0:
+    if len(STUDENTQUEUE.queue) == 0:
         print("No data to log")
 
         # display error box
@@ -133,23 +159,82 @@ def writeLogFile(delimiter="    "):
     header = "Log File. Last Modified " + date + "\n"
 
     try:
-        # Overwrite roster file, but preserve the first line
         with open(filepath, "w") as f:
             f.write(header)
 
-            for student in studentQueue.queue:
+            for student in STUDENTQUEUE.queue:
                 if student.reveal:
-                    # line = "{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}\n".format(student.fname, delimiter, student.lname, delimiter, student.uoID, delimiter,student.email, delimiter, student.phonetic, delimiter, student.reveal, delimiter, student.numCalled, delimiter, student.numFlags, delimiter, student.dates)
-                    line = "X{}{} {} <{}>\n".format(delimiter, student.fname, student.lname, student.email)
+                    line = "X    {} {} <{}>\n".format(student.fname, student.lname, student.email)
                     f.write(line)
 
     except FileNotFoundError:
-        print("File Does not exist")
+        print('File Can\'t Be Opened')
 
         # display error box
-        title = 'File Not Found'
+        title = 'File Can\'t Be Opened'
         heading = 'Unable to open file'
-        msg = 'File does not exist'
+        msg = 'File Can\'t Be Opened'
+        GUI.displayError(title, heading, msg)
+        return
+    except:
+        print('File Can\'t Be Opened')
+
+        # display error box
+        title = 'File Can\'t Be Opened'
+        heading = 'Unable to open file'
+        msg = 'File Can\'t Be Opened'
+        GUI.displayError(title, heading, msg)
+        return
+
+#  TODO: call this on every valid key press
+def overwriteRosterFile(delimiter="    "):
+    global ROSTERPATH
+
+    # TEMP tests
+    s1 = STUDENTQUEUE.dequeue()
+    s2 = STUDENTQUEUE.dequeue()
+    STUDENTQUEUE.enqueue(s1)
+    STUDENTQUEUE.enqueue(s2)
+
+    if len(STUDENTQUEUE.queue) == 0:
+        print("No data to log")
+
+        # display error box
+        title = 'No Data'
+        heading = 'No data to log'
+        msg = ''
+        GUI.displayError(title, heading, msg)
+        return
+
+    try:
+        with open(ROSTERPATH, "r") as f:
+            header = f.readline()
+
+        # Overwrite roster file, but preserve the first line
+        with open(ROSTERPATH, "w") as f:
+            f.write(header)
+            
+            d = delimiter
+            for student in STUDENTQUEUE.queue:
+                line = "{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}\n".format(student.fname, d, student.lname, d, student.uoID, d,student.email, d, student.phonetic, d, student.reveal, d, student.numCalled, d, student.numFlags, d, student.dates)
+                f.write(line)
+
+    except FileNotFoundError:
+        print('File Can\'t Be Opened')
+
+        # display error box
+        title = 'File Can\'t Be Opened'
+        heading = 'Unable to open file'
+        msg = 'File Can\'t Be Opened'
+        GUI.displayError(title, heading, msg)
+        return
+    except:
+        print('File Can\'t Be Opened')
+
+        # display error box
+        title = 'File Can\'t Be Opened'
+        heading = 'Unable to open file'
+        msg = 'File Can\'t Be Opened'
         GUI.displayError(title, heading, msg)
         return
 
