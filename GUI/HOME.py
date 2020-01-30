@@ -108,7 +108,7 @@ def inputFile(delimiter = "    "):
     # FIXME: these calls are temporary
     STUDENTQUEUE.printQ()
     writeSummaryPerformanceFile()
-    overwriteRosterFile()
+    overwriteRosterFile(ROSTERPATH, STUDENTQUEUE)
 
 def writeSummaryPerformanceFile():
 
@@ -187,16 +187,16 @@ def writeLogFile():
         return
 
 #  TODO: call this on every valid key press
-def overwriteRosterFile(delimiter="    "):
-    global ROSTERPATH
+def overwriteRosterFile(roster, studentQueue, delimiter="    "):
+    # global ROSTERPATH
 
     # TEMP tests
-    s1 = STUDENTQUEUE.dequeue()
-    s2 = STUDENTQUEUE.dequeue()
-    STUDENTQUEUE.enqueue(s1)
-    STUDENTQUEUE.enqueue(s2)
+    s1 = studentQueue.dequeue()
+    s2 = studentQueue.dequeue()
+    studentQueue.enqueue(s1)
+    studentQueue.enqueue(s2)
 
-    if len(STUDENTQUEUE.queue) == 0:
+    if len(studentQueue.queue) == 0:
         print("No data to log")
 
         # display error box
@@ -207,15 +207,15 @@ def overwriteRosterFile(delimiter="    "):
         return
 
     try:
-        with open(ROSTERPATH, "r") as f:
+        with open(roster, "r") as f:
             header = f.readline()
 
         # Overwrite roster file, but preserve the first line
-        with open(ROSTERPATH, "w") as f:
+        with open(roster, "w") as f:
             f.write(header)
             
             d = delimiter
-            for student in STUDENTQUEUE.queue:
+            for student in studentQueue.queue:
                 line = "{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}\n".format(student.fname, d, student.lname, d, student.uoID, d,student.email, d, student.phonetic, d, student.reveal, d, student.numCalled, d, student.numFlags, d, student.dates)
                 f.write(line)
 
