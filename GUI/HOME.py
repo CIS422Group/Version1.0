@@ -265,22 +265,18 @@ progress.pack(side=tk.BOTTOM)'''
 user_view = tk.Button(pane, pady=8, text="User View", highlightbackground='#0486ff', command=switch_view)
 user_view.pack(side=tk.LEFT) 
 user_view['font'] = button_font
-user_view.update()
 
 input_roster = tk.Button(pane, pady=8, text="Input Roster", highlightbackground='#0486ff', command=inputFile)
 input_roster.pack(side=tk.LEFT)
 input_roster['font'] = button_font
-input_roster.update()
 
 export_calls = tk.Button(pane, pady=8, text="Export to Log", highlightbackground='#0486ff', command=writeLogFile)
 export_calls.pack(side=tk.LEFT) 
 export_calls['font'] = button_font
-export_calls.update()
 
 exit_menu = tk.Button(pane, pady=8, text="Quit", highlightbackground='#0486ff', command=exitProgram)
 exit_menu.pack(side=tk.LEFT) 
 exit_menu['font'] = button_font
-exit_menu.update()
 
 # Main Loop
 root.attributes("-topmost", False)  # allow window to go behind other windows
