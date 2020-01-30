@@ -15,6 +15,7 @@ import time
 from backend.objects import Student, classQueue
 from backend.control import *
 # from backend.io import *
+# from HOME import overwriteRosterFile
 
 class GUI:
     def __init__(self, winTitle: str):
@@ -208,10 +209,18 @@ def testScreenUpdate():
     print("\n\033[38;5;220m--- End of test. Close the cold calling window to exit ---\033[0m")
     gui.mainWindow.mainloop()
 
-def testcontrol():
+def testcontrol(studentQ):
     print('--- Starting control test ---')
 
+    studentQ.printQ()
+
+
     gui = GUI('Students on deck')
+    gui.Roster = studentQ
+
+    print("self.Roster: ")
+    gui.Roster.printQ()
+
 
     names, highlightBegin, highlightEnd = OnDeckString(gui.current_Index, gui.onDeck)
     print(names)
