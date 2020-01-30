@@ -6,10 +6,14 @@ import random
 N = 45
 
 def N_index(length):
-	index = int(length  * N / 100) - 1
-	# print(index)
+    index = 0 
+    if length < 12:
+        index = 5
+    else:
+        index = int(length * N / 100) - 1
+    # print(index)
+    return index
 
-	return index
 
 # N_index()
 
