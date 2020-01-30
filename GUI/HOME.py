@@ -21,11 +21,16 @@ from objects import Student, classQueue
 
 '''======================================Functions=========================================='''
 
-def switch_view():
-    GUI.testcontrol()
+# def switch_view():
+#     GUI.testcontrol()
 
 STUDENTQUEUE = classQueue()
 ROSTERPATH = "" # This is the global roster path, set by inputFile. Might want to change it later
+
+def switch_view():
+    print("before pass in")
+    STUDENTQUEUE.printQ()
+    GUI.testcontrol(STUDENTQUEUE)
 
 def inputFile(delimiter = "    "):
     global ROSTERPATH
