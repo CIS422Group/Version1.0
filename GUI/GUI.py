@@ -21,7 +21,13 @@ class GUI:
     def __init__(self, winTitle: str):
         self.title = winTitle
         self.mainWindow = tk.Tk()
-        self.text = tk.Text(self.mainWindow, height=1, width=60, font=('Courier', 16))
+
+        self.canvas = tk.Label(self.mainWindow)
+        self.button = tk.Button(self.canvas, text="EXIT", width=10, height=2, command=self.closeWindow)
+        self.text = tk.Text(self.canvas, height=1, width=60, font=('Courier', 16))
+        self.canvas.pack()
+        self.text.pack()
+        self.button.pack()
 
         self.mainWindow.title(self.title)  # set window title (grey bar at top)
         self.mainWindow.attributes("-topmost", True)  # keep the window in front of all other windows
@@ -32,6 +38,8 @@ class GUI:
         self.current_Index = 0                  # the picked student's index in onDeck queue
         self.flagQ = classQueue()               # a list of student been flag 
 
+    def closeWindow(self):
+        self.mainWindow.destroy()
 
     def leftKey(self, event):
         # print("Left key pressed")
