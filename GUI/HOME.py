@@ -28,8 +28,6 @@ STUDENTQUEUE = classQueue()
 ROSTERPATH = "" # This is the global roster path, set by inputFile. Might want to change it later
 
 def switch_view():
-    print("before pass in")
-    STUDENTQUEUE.printQ()
     GUI.testcontrol(ROSTERPATH, STUDENTQUEUE)
 
 def inputFile(delimiter = "    "):
@@ -43,7 +41,7 @@ def inputFile(delimiter = "    "):
 
     try:
         with open(filepath, "r") as f:
-            print(next(f))     # skip first line of roster file (comments)
+            next(f)     # skip first line of roster file (comments)
             for i, line in enumerate(f):
                 elements = line.strip().split(delimiter)
 
@@ -107,7 +105,7 @@ def inputFile(delimiter = "    "):
 
     # FIXME: these calls are temporary
     STUDENTQUEUE.printQ()
-    writeSummaryPerformanceFile()
+    # writeSummaryPerformanceFile()
     # overwriteRosterFile(ROSTERPATH, STUDENTQUEUE)
 
 def writeSummaryPerformanceFile():
@@ -186,57 +184,9 @@ def writeLogFile():
         GUI.displayError(title, heading, msg)
         return
 
-#  TODO: call this on every valid key press
-# def overwriteRosterFile(roster, studentQueue, delimiter="    "):
-#     # global ROSTERPATH
-
-#     # TEMP tests
-#     s1 = studentQueue.dequeue()
-#     s2 = studentQueue.dequeue()
-#     studentQueue.enqueue(s1)
-#     studentQueue.enqueue(s2)
-
-#     if len(studentQueue.queue) == 0:
-#         print("No data to log")
-
-#         # display error box
-#         title = 'No Data'
-#         heading = 'No data to log'
-#         msg = ''
-#         GUI.displayError(title, heading, msg)
-#         return
-
-#     try:
-#         with open(roster, "r") as f:
-#             header = f.readline()
-
-#         # Overwrite roster file, but preserve the first line
-#         with open(roster, "w") as f:
-#             f.write(header)
-            
-#             d = delimiter
-#             for student in studentQueue.queue:
-#                 line = "{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}\n".format(student.fname, d, student.lname, d, student.uoID, d,student.email, d, student.phonetic, d, student.reveal, d, student.numCalled, d, student.numFlags, d, student.dates)
-#                 f.write(line)
-
-#     except FileNotFoundError:
-#         print('File Can\'t Be Opened')
-
-#         # display error box
-#         title = 'File Can\'t Be Opened'
-#         heading = 'Unable to open file'
-#         msg = 'File Can\'t Be Opened'
-#         GUI.displayError(title, heading, msg)
-#         return
-#     except:
-#         print('File Can\'t Be Opened')
-
-#         # display error box
-#         title = 'File Can\'t Be Opened'
-#         heading = 'Unable to open file'
-#         msg = 'File Can\'t Be Opened'
-#         GUI.displayError(title, heading, msg)
-#         return
+def exports():
+    writeSummaryPerformanceFile()
+    writeLogFile()
 
 def exitProgram():
     root.destroy()
@@ -275,7 +225,7 @@ input_roster = tk.Button(pane, pady=8, text="Input Roster", highlightbackground=
 input_roster.pack(side=tk.LEFT)
 input_roster['font'] = button_font
 
-export_calls = tk.Button(pane, pady=8, text="Export to Log", highlightbackground='#0486ff', command=writeLogFile)
+export_calls = tk.Button(pane, pady=8, text="Export to Log", highlightbackground='#0486ff', command=exports)
 export_calls.pack(side=tk.LEFT) 
 export_calls['font'] = button_font
 
