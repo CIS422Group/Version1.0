@@ -30,7 +30,7 @@ ROSTERPATH = "" # This is the global roster path, set by inputFile. Might want t
 def switch_view():
     print("before pass in")
     STUDENTQUEUE.printQ()
-    GUI.testcontrol(STUDENTQUEUE)
+    GUI.testcontrol(ROSTERPATH, STUDENTQUEUE)
 
 def inputFile(delimiter = "    "):
     global ROSTERPATH
@@ -108,7 +108,7 @@ def inputFile(delimiter = "    "):
     # FIXME: these calls are temporary
     STUDENTQUEUE.printQ()
     writeSummaryPerformanceFile()
-    overwriteRosterFile(ROSTERPATH, STUDENTQUEUE)
+    # overwriteRosterFile(ROSTERPATH, STUDENTQUEUE)
 
 def writeSummaryPerformanceFile():
 
@@ -187,56 +187,56 @@ def writeLogFile():
         return
 
 #  TODO: call this on every valid key press
-def overwriteRosterFile(roster, studentQueue, delimiter="    "):
-    # global ROSTERPATH
+# def overwriteRosterFile(roster, studentQueue, delimiter="    "):
+#     # global ROSTERPATH
 
-    # TEMP tests
-    s1 = studentQueue.dequeue()
-    s2 = studentQueue.dequeue()
-    studentQueue.enqueue(s1)
-    studentQueue.enqueue(s2)
+#     # TEMP tests
+#     s1 = studentQueue.dequeue()
+#     s2 = studentQueue.dequeue()
+#     studentQueue.enqueue(s1)
+#     studentQueue.enqueue(s2)
 
-    if len(studentQueue.queue) == 0:
-        print("No data to log")
+#     if len(studentQueue.queue) == 0:
+#         print("No data to log")
 
-        # display error box
-        title = 'No Data'
-        heading = 'No data to log'
-        msg = ''
-        GUI.displayError(title, heading, msg)
-        return
+#         # display error box
+#         title = 'No Data'
+#         heading = 'No data to log'
+#         msg = ''
+#         GUI.displayError(title, heading, msg)
+#         return
 
-    try:
-        with open(roster, "r") as f:
-            header = f.readline()
+#     try:
+#         with open(roster, "r") as f:
+#             header = f.readline()
 
-        # Overwrite roster file, but preserve the first line
-        with open(roster, "w") as f:
-            f.write(header)
+#         # Overwrite roster file, but preserve the first line
+#         with open(roster, "w") as f:
+#             f.write(header)
             
-            d = delimiter
-            for student in studentQueue.queue:
-                line = "{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}\n".format(student.fname, d, student.lname, d, student.uoID, d,student.email, d, student.phonetic, d, student.reveal, d, student.numCalled, d, student.numFlags, d, student.dates)
-                f.write(line)
+#             d = delimiter
+#             for student in studentQueue.queue:
+#                 line = "{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}\n".format(student.fname, d, student.lname, d, student.uoID, d,student.email, d, student.phonetic, d, student.reveal, d, student.numCalled, d, student.numFlags, d, student.dates)
+#                 f.write(line)
 
-    except FileNotFoundError:
-        print('File Can\'t Be Opened')
+#     except FileNotFoundError:
+#         print('File Can\'t Be Opened')
 
-        # display error box
-        title = 'File Can\'t Be Opened'
-        heading = 'Unable to open file'
-        msg = 'File Can\'t Be Opened'
-        GUI.displayError(title, heading, msg)
-        return
-    except:
-        print('File Can\'t Be Opened')
+#         # display error box
+#         title = 'File Can\'t Be Opened'
+#         heading = 'Unable to open file'
+#         msg = 'File Can\'t Be Opened'
+#         GUI.displayError(title, heading, msg)
+#         return
+#     except:
+#         print('File Can\'t Be Opened')
 
-        # display error box
-        title = 'File Can\'t Be Opened'
-        heading = 'Unable to open file'
-        msg = 'File Can\'t Be Opened'
-        GUI.displayError(title, heading, msg)
-        return
+#         # display error box
+#         title = 'File Can\'t Be Opened'
+#         heading = 'Unable to open file'
+#         msg = 'File Can\'t Be Opened'
+#         GUI.displayError(title, heading, msg)
+#         return
 
 def exitProgram():
     root.destroy()

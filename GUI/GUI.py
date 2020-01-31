@@ -17,6 +17,61 @@ from backend.control import *
 # from backend.io import *
 # from HOME import overwriteRosterFile
 
+def overwriteRosterFile(roster, studentQueue, delimiter="    "):
+    # global ROSTERPATH
+    # roster: file name
+    # studentQueue: quene
+
+    print("Checking!!!!!!!!!")
+
+    # TEMP tests
+    s1 = studentQueue.dequeue()
+    s2 = studentQueue.dequeue()
+    studentQueue.enqueue(s1)
+    studentQueue.enqueue(s2)
+
+    if len(studentQueue.queue) == 0:
+        print("No data to log")
+
+        # display error box
+        title = 'No Data'
+        heading = 'No data to log'
+        msg = ''
+        GUI.displayError(title, heading, msg)
+        return
+
+    try:
+        with open(roster, "r") as f:
+            header = f.readline()
+
+        # Overwrite roster file, but preserve the first line
+        with open(roster, "w") as f:
+            f.write(header)
+            
+            d = delimiter
+            for student in studentQueue.queue:
+                line = "{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}\n".format(student.fname, d, student.lname, d, student.uoID, d,student.email, d, student.phonetic, d, student.reveal, d, student.numCalled, d, student.numFlags, d, student.dates)
+                f.write(line)
+
+    except FileNotFoundError:
+        print('File Can\'t Be Opened')
+
+        # display error box
+        title = 'File Can\'t Be Opened'
+        heading = 'Unable to open file'
+        msg = 'File Can\'t Be Opened'
+        GUI.displayError(title, heading, msg)
+        return
+    except:
+        print('File Can\'t Be Opened')
+
+        # display error box
+        title = 'File Can\'t Be Opened'
+        heading = 'Unable to open file'
+        msg = 'File Can\'t Be Opened'
+        GUI.displayError(title, heading, msg)
+        return
+
 class GUI:
     def __init__(self, winTitle: str):
         self.title = winTitle
@@ -37,6 +92,7 @@ class GUI:
         self.onDeck = initDeck(self.Roster)     # 4 student object on deck, current_Index will be the index 
         self.current_Index = 0                  # the picked student's index in onDeck queue
         self.flagQ = classQueue()               # a list of student been flag 
+        self.path = ""                         # path for the source file
 
     def closeWindow(self):
         self.mainWindow.destroy()
@@ -68,6 +124,7 @@ class GUI:
         names, highlightBegin, highlightEnd = OnDeckString(self.current_Index, self.onDeck)
         # print(names, highlightBegin, highlightEnd)
         self.update(names, highlightBegin, highlightEnd)
+        overwriteRosterFile(self.path, self.Roster)
 
     def update(self, inText: str, highlightStart: int, highlightEnd: int, highlightColor='#23FF00'):
         """ Prints the names given in <inText> to the GUI screen.
@@ -217,14 +274,17 @@ def testScreenUpdate():
     print("\n\033[38;5;220m--- End of test. Close the cold calling window to exit ---\033[0m")
     gui.mainWindow.mainloop()
 
-def testcontrol(studentQ):
+def testcontrol(path, studentQ):
     print('--- Starting control test ---')
+
+    # print(type(path))
 
     studentQ.printQ()
 
 
     gui = GUI('Students on deck')
     gui.Roster = studentQ
+    gui.path = path
 
     print("self.Roster: ")
     gui.Roster.printQ()
