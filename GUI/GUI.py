@@ -69,7 +69,7 @@ class GUI:
         # print(names, highlightBegin, highlightEnd)
         self.update(names, highlightBegin, highlightEnd)
 
-    def update(self, inText: str, highlightStart: int, highlightEnd: int, highlightColor='green'):
+    def update(self, inText: str, highlightStart: int, highlightEnd: int, highlightColor='#23FF00'):
         """ Prints the names given in <inText> to the GUI screen.
         highlightStart is the starting index of the highlighting
         and highlightEnd is the ending index.
