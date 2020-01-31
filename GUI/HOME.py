@@ -28,7 +28,8 @@ STUDENTQUEUE = classQueue()
 ROSTERPATH = "" # This is the global roster path, set by inputFile. Might want to change it later
 
 def switch_view():
-    GUI.testcontrol(ROSTERPATH, STUDENTQUEUE)
+    if not GUI.userViewOpen():  # prevent 2 user view windows from opening simultaneously
+        GUI.testcontrol(ROSTERPATH, STUDENTQUEUE)
 
 def inputFile(delimiter = "    "):
     global ROSTERPATH
@@ -107,6 +108,7 @@ def inputFile(delimiter = "    "):
     STUDENTQUEUE.printQ()
     # writeSummaryPerformanceFile()
     # overwriteRosterFile(ROSTERPATH, STUDENTQUEUE)
+
 
 def writeSummaryPerformanceFile():
 
@@ -189,6 +191,9 @@ def exports():
     writeLogFile()
 
 def exitProgram():
+    window = GUI.getUserViewWindow()  # USER_VIEW_WINDOW global var must be set right after creating window
+    if window is not None:
+        window.closeWindow()
     root.destroy()
 
 '''======================================GUI=========================================='''

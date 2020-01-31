@@ -17,6 +17,9 @@ from backend.control import *
 # from backend.io import *
 # from HOME import overwriteRosterFile
 
+USER_VIEW_OPEN = 0
+USER_VIEW_WINDOW = None
+
 def overwriteRosterFile(roster, studentQueue, delimiter="    "):
     # global ROSTERPATH
     # roster: file name
@@ -76,6 +79,8 @@ class GUI:
     def __init__(self, winTitle: str):
         self.title = winTitle
         self.mainWindow = tk.Tk()
+        global USER_VIEW_OPEN
+        USER_VIEW_OPEN = 1
 
         self.canvas = tk.Label(self.mainWindow)
         self.button = tk.Button(self.canvas, text="EXIT", width=10, height=2, command=self.closeWindow)
@@ -86,6 +91,7 @@ class GUI:
 
         self.mainWindow.title(self.title)  # set window title (grey bar at top)
         self.mainWindow.attributes("-topmost", True)  # keep the window in front of all other windows
+        self.mainWindow.protocol("WM_DELETE_WINDOW", self.closeWindow)  # calls closeWindow() if user clicks red 'x'
 
         # for backend
         self.Roster = initRoster()              # creat a golable Roster which is a quene of a Student object
@@ -96,6 +102,10 @@ class GUI:
 
     def closeWindow(self):
         self.mainWindow.destroy()
+        global USER_VIEW_OPEN
+        global USER_VIEW_WINDOW
+        USER_VIEW_OPEN = 0
+        USER_VIEW_WINDOW = None
 
     def leftKey(self, event):
         # print("Left key pressed")
@@ -207,6 +217,12 @@ def displayError(title: str, heading: str, msg: str):
 def displayWarning(title: str, heading: str, msg: str):
     WarningBox(title, heading, msg).display()
 
+def userViewOpen():
+    return USER_VIEW_OPEN
+
+def getUserViewWindow():
+    return USER_VIEW_WINDOW
+
 def testArrowKeys():
     """ Opens the GUI with 4 names, and the window remains unchanged.
     A message displays whenever an arrow key is pressed.
@@ -275,16 +291,18 @@ def testScreenUpdate():
     gui.mainWindow.mainloop()
 
 def testcontrol(path, studentQ):
+    global USER_VIEW_WINDOW
+
     print('--- Starting control test ---')
 
     # print(type(path))
 
     studentQ.printQ()
 
-
     gui = GUI('Students on deck')
     gui.Roster = studentQ
     gui.path = path
+    USER_VIEW_WINDOW = gui
 
     print("self.Roster: ")
     gui.Roster.printQ()
